@@ -64,6 +64,14 @@ function AuthLayout() {
             Logout
           </button>
         </li>
+        <li>
+          <Link
+            to="/settings"
+            className="hover:underline data-[status='active']:font-extrabold"
+          >
+            Settings
+          </Link>
+        </li>
       </ul>
       <hr />
       <Outlet />

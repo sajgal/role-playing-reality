@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { routeTree } from './routeTree.gen'
 import { AuthContextProvider, useAuth } from './auth'
@@ -16,6 +17,8 @@ const router = createRouter({
     auth: undefined!, // This will be set after we wrap the app in AuthContextProvider
   },
 })
+
+const queryClient = new QueryClient();
 
 // Register things for typesafety
 declare module '@tanstack/react-router' {
@@ -41,9 +44,11 @@ function InnerApp() {
 
 function App() {
   return (
-    <AuthContextProvider>
-      <InnerApp />
-    </AuthContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthContextProvider>
+        <InnerApp />
+      </AuthContextProvider>
+    </QueryClientProvider>
   )
 }
 
