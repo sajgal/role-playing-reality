@@ -72,6 +72,14 @@ function AuthLayout() {
             Settings
           </Link>
         </li>
+        <li>
+          <Link
+            to="/tailwind"
+            className="hover:underline data-[status='active']:font-semibold"
+          >
+            Tailwind
+          </Link>
+        </li>
       </ul>
       <hr />
       <Outlet />

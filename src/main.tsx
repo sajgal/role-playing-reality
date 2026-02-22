@@ -5,8 +5,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { routeTree } from './routeTree.gen'
 import { AuthContextProvider, useAuth } from './auth'
+import { TooltipProvider } from "@/components/ui/tooltip"
 
 import './styles.css'
+import { Spinner } from '@/components/ui/spinner'
 
 // Set up a Router instance
 const router = createRouter({
@@ -34,7 +36,8 @@ function InnerApp() {
   if (auth.isInitialLoading) {
     return (
       <div className="flex h-screen w-full items-center justify-center p-4">
-        <div className="size-10 rounded-full border-4 border-gray-200 border-t-foreground animate-spin" />
+        {/* <div className="size-10 rounded-full border-4 border-gray-200 border-t-foreground animate-spin" /> */}
+        <Spinner className='size-10' />
       </div>
     )
   }
@@ -46,7 +49,9 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
-        <InnerApp />
+        <TooltipProvider>
+          <InnerApp />
+        </TooltipProvider>
       </AuthContextProvider>
     </QueryClientProvider>
   )

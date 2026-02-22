@@ -4,6 +4,7 @@ import { useAuth } from '../auth';
 import { db } from '../firebase/config';
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useQuery } from '@tanstack/react-query';
+import { Spinner } from '@/components/ui/spinner';
 
 export const Route = createFileRoute('/settings')({
   beforeLoad: ({ context, location }) => {
@@ -50,11 +51,15 @@ function SettingsComponent() {
     }
   })
 
-  if (isLoading) return <div>Loading ...</div>;
+  if (isLoading) return (
+    <div className="flex h-screen w-full items-center justify-center p-4">
+      <Spinner className='size-10' />
+    </div>
+  );
 
   return <div>
-    <h1>Settings</h1>
-    <div>Loading: {isLoading ? "Loading..." : "Not Loading"}</div>
+    <a href='/'><h1>Settings</h1></a>
+    <div>Loading: {isLoading ? "Loading" : "Not Loading"}</div>
     <form
       onSubmit={(e) => {
         e.preventDefault()

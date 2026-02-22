@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TailwindRouteImport } from './routes/tailwind'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthRouteImport } from './routes/_auth'
@@ -18,6 +19,11 @@ import { Route as AuthDashboardRouteImport } from './routes/_auth.dashboard'
 import { Route as AuthInvoicesIndexRouteImport } from './routes/_auth.invoices.index'
 import { Route as AuthInvoicesInvoiceIdRouteImport } from './routes/_auth.invoices.$invoiceId'
 
+const TailwindRoute = TailwindRouteImport.update({
+  id: '/tailwind',
+  path: '/tailwind',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -62,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/settings': typeof SettingsRoute
+  '/tailwind': typeof TailwindRoute
   '/dashboard': typeof AuthDashboardRoute
   '/invoices': typeof AuthInvoicesRouteWithChildren
   '/invoices/$invoiceId': typeof AuthInvoicesInvoiceIdRoute
@@ -71,6 +78,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/settings': typeof SettingsRoute
+  '/tailwind': typeof TailwindRoute
   '/dashboard': typeof AuthDashboardRoute
   '/invoices/$invoiceId': typeof AuthInvoicesInvoiceIdRoute
   '/invoices': typeof AuthInvoicesIndexRoute
@@ -81,6 +89,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/login': typeof LoginRoute
   '/settings': typeof SettingsRoute
+  '/tailwind': typeof TailwindRoute
   '/_auth/dashboard': typeof AuthDashboardRoute
   '/_auth/invoices': typeof AuthInvoicesRouteWithChildren
   '/_auth/invoices/$invoiceId': typeof AuthInvoicesInvoiceIdRoute
@@ -92,6 +101,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/settings'
+    | '/tailwind'
     | '/dashboard'
     | '/invoices'
     | '/invoices/$invoiceId'
@@ -101,6 +111,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/settings'
+    | '/tailwind'
     | '/dashboard'
     | '/invoices/$invoiceId'
     | '/invoices'
@@ -110,6 +121,7 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/login'
     | '/settings'
+    | '/tailwind'
     | '/_auth/dashboard'
     | '/_auth/invoices'
     | '/_auth/invoices/$invoiceId'
@@ -121,10 +133,18 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   LoginRoute: typeof LoginRoute
   SettingsRoute: typeof SettingsRoute
+  TailwindRoute: typeof TailwindRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/tailwind': {
+      id: '/tailwind'
+      path: '/tailwind'
+      fullPath: '/tailwind'
+      preLoaderRoute: typeof TailwindRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -215,6 +235,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   LoginRoute: LoginRoute,
   SettingsRoute: SettingsRoute,
+  TailwindRoute: TailwindRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
